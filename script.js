@@ -12,7 +12,7 @@
 // Gestire gli errori con try/catch
 
 
-//funzione di supporto per trasformare il mio oggetto json
+//funzione di supporto per prendere l'oggetto dal mio resolve della promise
 async function fetchTransform(url) {
     const response = await fetch(url)
     const obj = response.json();
