@@ -12,6 +12,8 @@
 // Gestire gli errori con try/catch
 
 
+
+
 //funzione di supporto per prendere l'oggetto dal mio resolve della promise
 async function fetchTransform(url) {
     const response = await fetch(url)
@@ -52,7 +54,10 @@ async function getChefBirthday(id) {
         throw new Error(`Id dell'utente non trovato !`)
     }
 
-    return user.birthDate
+
+
+
+    return user.birthDate;
 }
 
 
@@ -63,7 +68,7 @@ async function getChefBirthday(id) {
 
     try {
         const chefBirthDay = await getChefBirthday(1)
-        console.log("data di nascita dello chef:", chefBirthDay)
+        console.log("data di nascita dello chef:", dayjs(chefBirthDay).format("DD/MM/YYYY"))
     } catch (error) {
         console.error(error);
 
