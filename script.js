@@ -15,9 +15,8 @@
 //funzione di supporto per prendere l'oggetto dal mio resolve della promise
 async function fetchTransform(url) {
     const response = await fetch(url)
-    const obj = response.json();
+    const obj = await response.json();
     return obj
-
 }
 
 
@@ -26,7 +25,22 @@ async function fetchTransform(url) {
 
 
 async function getChefBirthday(id) {
-    const recipe = await fetchTransform(`https://dummyjson.com/recipes/${id}`)
+
+
+    let recipe;
+
+    try {
+        recipe = await fetchTransform(`https://dummyjson.com/recipe/${id}`)
+    } catch (error) {
+        throw new Error(`non riesco a trovare la ricetta !`)
+    }
+
+    if(recipe.message) {
+        throw new Error(recipe.message)
+    }
+
+
+
     const user = await fetchTransform(`https://dummyjson.com/users/${recipe.userId}`)
     return user.birthDate
 
@@ -35,9 +49,19 @@ async function getChefBirthday(id) {
 
 
 
+(async () => {
+
+
+    try {
+        const chefBirthDay = await getChefBirthday(10000000)
+        console.log("data di nascita dello chef:", chefBirthDay)
+    } catch (error) {
+        console.error(error);
+
+    }
+
+    console.log("funziono anche fin qui !");
+})()
 
 
 
-getChefBirthday(1)
-    .then(birthday => console.log("data compleanno dello chef:", birthday))
-    .catch(error => console.error(error))
