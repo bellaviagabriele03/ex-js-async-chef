@@ -35,15 +35,24 @@ async function getChefBirthday(id) {
         throw new Error(`non riesco a trovare la ricetta !`)
     }
 
-    if(recipe.message) {
+    if (recipe.message) {
         throw new Error(recipe.message)
     }
 
 
+    let user;
 
-    const user = await fetchTransform(`https://dummyjson.com/users/${recipe.userId}`)
+    try {
+        user = await fetchTransform(`https://dummyjson.com/users/${recipe.userId}`)
+    } catch (error) {
+        throw new Error("non riesco a trovare l'utente !")
+    }
+
+    if (user.message) {
+        throw new Error(`Id dell'utente non trovato !`)
+    }
+
     return user.birthDate
-
 }
 
 
@@ -53,7 +62,7 @@ async function getChefBirthday(id) {
 
 
     try {
-        const chefBirthDay = await getChefBirthday(10000000)
+        const chefBirthDay = await getChefBirthday(1)
         console.log("data di nascita dello chef:", chefBirthDay)
     } catch (error) {
         console.error(error);
